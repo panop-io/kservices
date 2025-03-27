@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panop-scanner-internal
+  labels:
+    app: panop-scanner-internal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panop-scanner-internal
+  template:
+    metadata:
+      labels:
+        app: panop-scanner-internal
+    spec:
+      imagePullSecrets:
+        - name: 'panop-exocr'
+      containers:
+        - name: scanner-internal
+          image: exo.container-registry.com/panop/panop-svc-scanner/panop-scanner-internal:v1.8.14
+          resources:
+            requests:
+              cpu: 100m
+              memory: 400Mi
+            limits:
+              cpu: 100m
+              memory: 1500Mi
+          env:
+            - name: PANOP_SCANNER_TYPE
+              value: internal
+            - name: HTTP_TOKEN
+              value: ""
+            - name: X_PANOP_SCANNER
+              value: ""
+            - name: DOMAIN
+              value: dev

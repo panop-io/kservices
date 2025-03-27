@@ -1,0 +1,1 @@
+## Panop Kubernetes service resource import 
